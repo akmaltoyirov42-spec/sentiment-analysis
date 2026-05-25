@@ -39,22 +39,6 @@ python -m src.train
 streamlit run app.py
 ```
 
----
-
-## what's in here
-
-```
-├── src/
-│   ├── preprocess.py   text cleaning (HTML tags, URLs, punctuation)
-│   ├── train.py        TF-IDF + LogReg pipeline
-│   └── predict.py      inference
-├── app.py              streamlit UI
-└── data/
-    └── generate_sample.py
-```
-
----
-
 ## notes
 
 - `sublinear_tf=True` in TfidfVectorizer helps — repeated words don't dominate
