@@ -1,40 +1,38 @@
-# Sentiment Analysis — Movie Reviews
+# sentiment analysis — movie reviews
 
 ![Python](https://img.shields.io/badge/python-3.11-blue)
 ![scikit-learn](https://img.shields.io/badge/scikit--learn-1.5-orange)
 
-Classifies movie reviews as positive or negative. TF-IDF + Logistic Regression trained on 50k IMDB reviews. Simple Streamlit UI to test it live.
+learning NLP basics. classifies IMDB reviews as positive or negative using TF-IDF + logistic regression. trained on the 50k review dataset. small streamlit UI to test it.
 
-Dataset: [IMDB 50k Reviews — Kaggle](https://www.kaggle.com/datasets/lakshmi25npathi/imdb-dataset-of-50k-movie-reviews)
+dataset: [IMDB 50k Reviews — Kaggle](https://www.kaggle.com/datasets/lakshmi25npathi/imdb-dataset-of-50k-movie-reviews)
 
 ---
 
-## Results
+## results
 
-| Metric | Score |
+| metric | score |
 |---|---|
 | ROC-AUC | 0.982 |
-| Accuracy | 0.897 |
+| accuracy | 0.897 |
 | F1 (positive) | 0.90 |
 | F1 (negative) | 0.90 |
 
-Used bigrams (`ngram_range=(1,2)`) — "not good" and "not bad" are treated as separate features instead of just "good" and "bad". Makes a noticeable difference on negation-heavy reviews.
+big thing i found out — using bigrams (`ngram_range=(1,2)`) gave a noticeable bump. "not good" and "not bad" become separate features instead of getting flattened to just "good" / "bad". makes negation work properly.
 
 ---
 
-## Run it
+## run it
 
 ```bash
 git clone https://github.com/akmaltoyirov42-spec/sentiment-analysis.git
 cd sentiment-analysis
-
 pip install -r requirements.txt
 
-# Option A: use the real Kaggle dataset (50k reviews)
-# download CSV from kaggle.com/datasets/lakshmi25npathi/imdb-dataset-of-50k-movie-reviews
-# rename it to imdb_reviews.csv and place in data/
+# option A: real dataset from kaggle (link above)
+# download CSV, rename to imdb_reviews.csv, drop in data/
 
-# Option B: generate a small sample to test the pipeline
+# option B: just generate a small sample to test the pipeline
 python data/generate_sample.py
 
 python -m src.train
@@ -43,20 +41,27 @@ streamlit run app.py
 
 ---
 
-## Files
+## what's in here
 
 ```
 ├── src/
-│   ├── preprocess.py   text cleaning (HTML, URLs, punctuation)
+│   ├── preprocess.py   text cleaning (HTML tags, URLs, punctuation)
 │   ├── train.py        TF-IDF + LogReg pipeline
 │   └── predict.py      inference
-├── app.py              Streamlit UI
+├── app.py              streamlit UI
 └── data/
     └── generate_sample.py
 ```
 
 ---
 
-## Stack
+## what i learned
+
+- `sublinear_tf=True` in TfidfVectorizer helps a lot — repeated words don't dominate
+- bigrams matter way more than i expected
+- logistic regression with TF-IDF beats most fancy stuff for this kind of task
+- HTML tags hidden in reviews mess things up if you don't strip them
+
+---
 
 scikit-learn, pandas, Streamlit
